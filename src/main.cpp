@@ -1,3 +1,4 @@
+#include <FSM/Game.hpp>
 #include <IO/Commands/CreateMap.hpp>
 #include <IO/Commands/March.hpp>
 #include <IO/Commands/SpawnHunter.hpp>
@@ -31,6 +32,8 @@ int main(int argc, char** argv)
 	}
 
 	// Code for example...
+	fsm::Game game;
+	game.runSimulation();
 
 	std::cout << "Commands:\n";
 	io::CommandParser parser;

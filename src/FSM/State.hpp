@@ -18,7 +18,7 @@ namespace sw::fsm
     };
 
     // States
-    class SimulationInitState : public IGameState {
+    class SimulationInitState final : public IGameState {
         constexpr static const char* Name = "SimulationInit";
         
     public:
@@ -29,7 +29,7 @@ namespace sw::fsm
         std::string name() const override { return Name; }
     };
 
-    class SimulationRunningState : public IGameState {
+    class SimulationRunningState final : public IGameState {
         constexpr static const char* Name = "SimulationRunning";
 
     public:
@@ -40,14 +40,14 @@ namespace sw::fsm
         std::string name() const override { return Name; }
     };
 
-    class SimulationEndedState : public IGameState {
+    class SimulationEndedState final : public IGameState {
         constexpr static const char* Name = "SimulationEnded";
 
     public:
         void enter(Game& game) override;
         void update(Game& game) override;
         void exit(Game& game) override;
-        
+
         std::string name() const override { return Name; }
     };
 

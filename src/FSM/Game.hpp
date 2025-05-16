@@ -5,7 +5,7 @@
 
 namespace sw::fsm
 {
-    class Game {
+    class Game final {
         private:
             std::unique_ptr<IGameState> currentState;
 

@@ -14,20 +14,20 @@ This page walks you through the steps required to deploy the [Battle-Server](htt
 
     ```bash
     git clone https://github.com/korenandr/battle-server.git
+    cd ./battle-server
     ```
 
-2. Create and navigate to the build directory.
+2. Configure and build the project with CMake.
 
     ```bash
-    cd battle-server
-    mkdir build && cd build
+    cmake -S . -B build
+    cmake --build build
     ```
 
-3. Configure and build the project with CMake.
+4. Launch Unit tests.
 
     ```bash
-    cmake ..
-    cmake --build .
+    cd build/tests && ctest
     ```
 
 ## Clean up

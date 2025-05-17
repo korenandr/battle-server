@@ -14,9 +14,15 @@ namespace sw::fsm
 
             void update();
 
+            void nextState();
+
             void initSimulation();
 
+            void runSimulation();
+
             void endSimulation();
+
+            void shutdown();
 
         public:
             Game();
@@ -33,7 +39,7 @@ namespace sw::fsm
         public:
             std::string getStateName() const;
 
-            void runSimulation();
+            int run();
     };
 
 } // namespace sw::fsm

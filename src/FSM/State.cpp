@@ -3,8 +3,20 @@
 #include <iostream>
 
 
-namespace sw::fsm
-{
+namespace sw::fsm {
+
+    bool IGameState::isProcessing() const {
+        return _state == State::PROCESSING;
+    }
+
+    bool IGameState::isFinished() const {
+        return _state == State::FINISHED;
+    }
+
+    bool IGameState::isFailed() const {
+        return _state == State::FAILED;
+    }
+
     // Implementations of state methods
     void SimulationInitState::enter(Game& game) {
         std::cout << "[SimulationInitState] Entering..." << std::endl;

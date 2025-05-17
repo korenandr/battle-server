@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 
 	// Code for example...
 	fsm::Game game;
-	game.runSimulation();
+	game.run();
 
 	std::cout << "Commands:\n";
 	io::CommandParser parser;

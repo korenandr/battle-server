@@ -7,6 +7,16 @@ namespace sw::fsm
     class Game;
 
     class IGameState {
+
+        enum class State {
+            PROCESSING = 0,
+            FINISHED = 1,
+            FAILED = 2,
+        };
+    
+    private:
+        State _state;
+
     public:
         virtual ~IGameState() = default;
 
@@ -15,10 +25,15 @@ namespace sw::fsm
         virtual void exit(Game& game) = 0;
 
         virtual std::string name() const = 0;
+        
+        bool isProcessing() const;
+        bool isFinished() const;
+        bool isFailed() const;
     };
 
     // States
     class SimulationInitState final : public IGameState {
+    public:
         constexpr static const char* Name = "SimulationInit";
         
     public:
@@ -30,6 +45,7 @@ namespace sw::fsm
     };
 
     class SimulationRunningState final : public IGameState {
+    public:
         constexpr static const char* Name = "SimulationRunning";
 
     public:
@@ -41,6 +57,7 @@ namespace sw::fsm
     };
 
     class SimulationEndedState final : public IGameState {
+    public:
         constexpr static const char* Name = "SimulationEnded";
 
     public:

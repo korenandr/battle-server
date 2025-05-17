@@ -20,6 +20,27 @@ namespace sw::fsm
         if (currentState) currentState->update(*this);
     }
 
+    void Game::nextState() {
+        if (!currentState || currentState->isProcessing()) return;
+        if (currentState->isFailed()) {
+            shutdown();
+            return;
+        }
+        if (!currentState->isFinished()) {
+            throw "Unknown state of the game state";
+        }
+
+        if (currentState->name() == SimulationInitState::Name) {
+            runSimulation();
+        } else if(currentState->name() == SimulationRunningState::Name) {
+            endSimulation();
+        } else if(currentState->name() == SimulationEndedState::Name) {
+            shutdown();
+        } else {
+            throw "Unknown state";
+        }
+    }
+
     std::string Game::getStateName() const {
         return currentState ? currentState->name() : "None";
     }
@@ -34,6 +55,19 @@ namespace sw::fsm
 
     void Game::endSimulation() {
         changeState(std::make_unique<SimulationEndedState>());
+    }
+
+    void Game::shutdown() {
+        changeState(nullptr);
+    }
+
+    int Game::run() {
+        while(currentState) {
+            update();
+            nextState();
+        }
+
+        return 0;
     }
 
 } // namespace sw::fsm

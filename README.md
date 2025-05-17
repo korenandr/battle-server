@@ -1,11 +1,37 @@
-Battle-server is a demo application. Description of the task you can read [here](/docs/task.md).
+# Проект: Пошаговая симуляция битвы
 
-## Architecture
+Это демо приложение, которое симулирует битву шаг за шагом, используя список заранее подготовленных команд из файла.
+Полное описание задачи можно прочитать [здесь](/docs/task.md).
 
-**TODO**
+## Структура проекта
 
-## Deployment options
+Проект разделен на несколько основных компонентов:
 
-You can launch this demo app:
+### 1. Конечный автомат (FSM)
+- Управляет состояниями симуляции (инициализация, выполнение, завершение)
+- Реализован в [src/FSM/](/src/FSM/)
+- Основные классы: [Game](/src/FSM/Game.hpp), [State](/src/FSM/State.hpp)
 
-* [Locally](/docs/local-launch-guide.md)
+### 2. Система ввода-вывода (IO)
+- Обработка команд и событий
+- Реализована в [src/IO/](/src/IO/)
+- Подкомпоненты:
+  - [Commands/](/src/IO/Commands/) - Классы команд (CreateMap, SpawnUnit и т.д.)
+  - [Events/](/src/IO/Events/) - Классы событий (UnitMoved, UnitAttacked и т.д.)
+  - [System/](/src/IO/System/) - Парсер команд и логгер событий
+
+## Принципы проектирования
+
+1. **SOLID**
+   - Single Responsibility - каждый класс отвечает за одну задачу
+   - Interface Segregation - четкие интерфейсы для каждой подсистемы
+   - Dependency Inversion - зависимости от абстракций
+
+2. **Паттерны**
+   - State - для управления состоянием симуляции
+
+## Способы развертывания приложения
+
+Можно запустить данное приложение:
+
+* [Локально](/docs/local-launch-guide.md)

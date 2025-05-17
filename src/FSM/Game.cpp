@@ -1,13 +1,24 @@
 #include "Game.hpp"
 
-namespace sw::fsm
-{
-    Game::Game() {
+#include <fstream>
+
+namespace sw::fsm {
+
+    Game::Game(int argc, char** argv) {
+        if (argc != 2) {
+            throw std::runtime_error("Error: No file specified in command line argument");
+        }
+
+        std::ifstream file(argv[1]);
+        if (!file) {
+            throw std::runtime_error("Error: File not found - " + std::string(argv[1]));
+        }
+
         initSimulation();
     }
 
     Game::~Game() {
-        endSimulation();
+        shutdown();
     }
 
     void Game::changeState(std::unique_ptr<IGameState>&& newState) {
@@ -18,27 +29,6 @@ namespace sw::fsm
 
     void Game::update() {
         if (currentState) currentState->update(*this);
-    }
-
-    void Game::nextState() {
-        if (!currentState || currentState->isProcessing()) return;
-        if (currentState->isFailed()) {
-            shutdown();
-            return;
-        }
-        if (!currentState->isFinished()) {
-            throw "Unknown state of the game state";
-        }
-
-        if (currentState->name() == SimulationInitState::Name) {
-            runSimulation();
-        } else if(currentState->name() == SimulationRunningState::Name) {
-            endSimulation();
-        } else if(currentState->name() == SimulationEndedState::Name) {
-            shutdown();
-        } else {
-            throw "Unknown state";
-        }
     }
 
     std::string Game::getStateName() const {
@@ -64,7 +54,6 @@ namespace sw::fsm
     int Game::run() {
         while(currentState) {
             update();
-            nextState();
         }
 
         return 0;

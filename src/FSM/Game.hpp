@@ -6,6 +6,10 @@
 namespace sw::fsm
 {
     class Game final {
+        friend SimulationInitState;
+        friend SimulationRunningState;
+        friend SimulationEndedState;
+
         private:
             std::unique_ptr<IGameState> currentState;
 
@@ -13,8 +17,6 @@ namespace sw::fsm
             void changeState(std::unique_ptr<IGameState>&& newState);
 
             void update();
-
-            void nextState();
 
             void initSimulation();
 
@@ -25,7 +27,7 @@ namespace sw::fsm
             void shutdown();
 
         public:
-            Game();
+            explicit Game(int argc, char** argv);
             ~Game();
 
             Game(const Game&) = delete;

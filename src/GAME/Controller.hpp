@@ -1,30 +1,40 @@
 #pragma once
 
-#include "GAME/Units/Unit.hpp"
+#include "GAME/Model.hpp"
+#include "GAME/View.hpp"
+#include "IO/Commands/CreateMap.hpp"
+#include "IO/Commands/SpawnSwordsman.hpp"
+#include "IO/Commands/SpawnHunter.hpp"
+#include "IO/Commands/March.hpp"
+#include "IO/Events/MapCreated.hpp"
+#include "IO/Events/UnitSpawned.hpp"
+#include "IO/Events/MarchStarted.hpp"
+#include "IO/Events/MarchEnded.hpp"
+#include "IO/Events/UnitMoved.hpp"
+#include "IO/Events/UnitAttacked.hpp"
+#include "IO/Events/UnitDied.hpp"
+#include "IO/System/EventLog.hpp"
+
 #include <memory>
-#include <string>
 
 namespace sw::game {
 
-class Model;
-class View;
-
 class Controller {
 public:
-    Controller(const std::shared_ptr<Model>& model, const std::shared_ptr<View>& view);
+    Controller(const std::shared_ptr<game::Model>& model, 
+               const std::shared_ptr<game::View>& view,
+               const std::shared_ptr<EventLog>& eventLog);
 
-    // Unit management
-    void addUnit(const std::shared_ptr<Unit>& unit);
-    void removeUnit(const std::string& unitId);
-    void moveUnit(const std::string& unitId, int newX, int newY);
-
-    // Display methods
-    void displayGameState() const;
-    void displayUnit(const std::string& unitId) const;
+    // Command handlers
+    void handleCreateMap(const io::CreateMap& command);
+    void handleSpawnSwordsman(const io::SpawnSwordsman& command);
+    void handleSpawnHunter(const io::SpawnHunter& command);
+    void handleMarch(const io::March& command);
 
 private:
-    std::shared_ptr<Model> model_;
-    std::shared_ptr<View> view_;
+    std::shared_ptr<game::Model> model_;
+    std::shared_ptr<game::View> view_;
+    std::shared_ptr<EventLog> eventLog_;
 };
 
-} // namespace sw::game
+} // namespace sw::game 

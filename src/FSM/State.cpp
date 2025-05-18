@@ -50,85 +50,31 @@ namespace sw::fsm {
         // TODO: Run simulation here
 
         // Create model with a 10x10 map
-		auto model = std::make_shared<game::Model>(10, 10);
-		
-		// Create view and controller
-		auto view = std::make_shared<game::View>(model);
-		auto controller = std::make_shared<game::Controller>(model, view);
+        auto model = std::make_shared<game::Model>(10, 10);
+        
+        // Create view and controller
+        auto view = std::make_shared<game::View>(model);
+        auto eventLog = std::make_shared<EventLog>();
+        auto controller = std::make_shared<game::Controller>(model, view, eventLog);
 
-		// Create some units
-		auto knight = std::make_shared<game::Unit>("knight1", "Knight", 5, 5, 100);
-		auto archer = std::make_shared<game::Unit>("archer1", "Archer", 3, 3, 80);
-		auto mage = std::make_shared<game::Unit>("mage1", "Mage", 7, 7, 60);
-
-		// Add units to the game
-		controller->addUnit(knight);
-		controller->addUnit(archer);
-		controller->addUnit(mage);
-
-		// Display initial game state
-		std::cout << "Initial game state:\n";
-		controller->displayGameState();
-
-		// Move a unit
-		std::cout << "\nMoving knight to (6, 6):\n";
-		controller->moveUnit("knight1", 6, 6);
-		controller->displayGameState();
-
-		// Display specific unit
-		std::cout << "\nDisplaying archer information:\n";
-		controller->displayUnit("archer1");
-
-		// Remove a unit
-		std::cout << "\nRemoving mage:\n";
-		controller->removeUnit("mage1");
-		controller->displayGameState();
-
-        ///////////////////////////////////////////////////////////////////////
-
+        // Set up command parser
         io::CommandParser parser;
-        parser.add<io::CreateMap>([](auto command) { printDebug(std::cout, command); })
-            .add<io::SpawnSwordsman>([](auto command) { printDebug(std::cout, command); })
-            .add<io::SpawnHunter>([](auto command) { printDebug(std::cout, command); })
-            .add<io::March>([](auto command) { printDebug(std::cout, command); });
+        parser.add<io::CreateMap>([controller](auto command) { 
+            controller->handleCreateMap(command); 
+        })
+        .add<io::SpawnSwordsman>([controller](auto command) { 
+            controller->handleSpawnSwordsman(command); 
+        })
+        .add<io::SpawnHunter>([controller](auto command) { 
+            controller->handleSpawnHunter(command); 
+        })
+        .add<io::March>([controller](auto command) { 
+            controller->handleMarch(command); 
+        });
 
+        // Parse commands from file
         std::ifstream file("./commands_example.txt");
         parser.parse(file);
-
-        EventLog eventLog;
-
-        eventLog.log(1, io::MapCreated{10, 10});
-        eventLog.log(1, io::UnitSpawned{1, "Swordsman", 0, 0});
-        eventLog.log(1, io::UnitSpawned{2, "Hunter", 9, 0});
-        eventLog.log(1, io::MarchStarted{1, 0, 0, 9, 0});
-        eventLog.log(1, io::MarchStarted{2, 9, 0, 0, 0});
-        eventLog.log(1, io::UnitSpawned{3, "Swordsman", 0, 9});
-        eventLog.log(1, io::MarchStarted{3, 0, 9, 0, 0});
-
-        eventLog.log(2, io::UnitMoved{1, 1, 0});
-        eventLog.log(2, io::UnitMoved{2, 8, 0});
-        eventLog.log(2, io::UnitMoved{3, 0, 8});
-
-        eventLog.log(3, io::UnitMoved{1, 2, 0});
-        eventLog.log(3, io::UnitMoved{2, 7, 0});
-        eventLog.log(3, io::UnitMoved{3, 0, 7});
-
-        eventLog.log(4, io::UnitMoved{1, 3, 0});
-        eventLog.log(4, io::UnitAttacked{2, 1, 5, 0});
-        eventLog.log(4, io::UnitDied{1});
-        eventLog.log(4, io::UnitMoved{3, 0, 6});
-
-        eventLog.log(5, io::UnitMoved{2, 6, 0});
-        eventLog.log(5, io::UnitMoved{3, 0, 5});
-
-        eventLog.log(6, io::UnitMoved{2, 5, 0});
-        eventLog.log(6, io::UnitMoved{3, 0, 4});
-
-        eventLog.log(7, io::UnitAttacked{2, 3, 5, 5});
-        eventLog.log(7, io::UnitMoved{3, 0, 3});
-
-        eventLog.log(8, io::UnitAttacked{2, 3, 5, 0});
-        eventLog.log(8, io::UnitDied{3});
 
         game.endSimulation();
     }
@@ -150,4 +96,4 @@ namespace sw::fsm {
         std::cout << "[SimulationEndedState] Restarting..." << std::endl;
     }
 
-}// sw::fsm
+} // namespace sw::fsm

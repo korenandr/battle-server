@@ -11,44 +11,40 @@ Model::Model(int width, int height) : mapWidth_(width), mapHeight_(height) {
     }
 }
 
+void Model::setMapSize(int width, int height) {
+    if ((width <= 0) || (height <= 0)) {
+        throw std::invalid_argument("Map dimensions must be positive");
+    }
+    mapWidth_ = width;
+    mapHeight_ = height;
+}
+
 void Model::addUnit(std::shared_ptr<Unit> unit) {
     if (!unit) {
         throw std::invalid_argument("Unit cannot be null");
     }
 
-    // Check if position is valid
-    if ((unit->getX() < 0) || (unit->getX() >= mapWidth_) ||
-        (unit->getY() < 0) || (unit->getY() >= mapHeight_)) {
+    if (!isPositionValid(unit->getX(), unit->getY())) {
         throw std::out_of_range("Unit position is out of map bounds");
     }
 
-    // Check if position is already occupied
-    for (const auto& existingUnit : units_) {
-        if ((existingUnit->getX() == unit->getX()) && 
-            (existingUnit->getY() == unit->getY())) {
-            throw std::runtime_error("Position is already occupied");
-        }
+    if (isPositionOccupied(unit->getX(), unit->getY())) {
+        throw std::runtime_error("Position is already occupied");
     }
 
-    units_.push_back(unit);
+    units_[unit->getId()] = unit;
 }
 
 void Model::removeUnit(const std::string& unitId) {
-    units_.erase(
-        std::remove_if(std::begin(units_), std::end(units_),
-            [&unitId](const auto& unit) { return unit->getId() == unitId; }),
-        std::end(units_)
-    );
+    units_.erase(unitId);
 }
 
 std::shared_ptr<Unit> Model::getUnit(const std::string& unitId) const {
-    auto it = std::find_if(std::cbegin(units_), std::cend(units_),
-        [&unitId](const auto& unit) { return unit->getId() == unitId; });
-    
-    return it != std::cend(units_) ? *it : nullptr;
+    const auto it = units_.find(unitId);
+    return it != units_.end() ? it->second : nullptr;
 }
 
-const std::vector<std::shared_ptr<Unit>>& Model::getAllUnits() const {
+std::unordered_map<std::string, std::shared_ptr<Unit>> Model::getAllUnits() const {
     return units_;
 }
 
@@ -67,7 +63,7 @@ bool Model::isPositionValid(int x, int y) const {
 bool Model::isPositionOccupied(int x, int y) const {
     return std::any_of(std::cbegin(units_), std::cend(units_),
         [x, y](const auto& unit) {
-            return unit->getX() == x && unit->getY() == y;
+            return unit.second->getX() == x && unit.second->getY() == y;
         });
 }
 

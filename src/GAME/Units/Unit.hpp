@@ -9,8 +9,8 @@ public:
     Unit(const std::string& id, const std::string& type, int x, int y, int health);
 
     // Getters
-    const std::string& getId() const;
-    const std::string& getType() const;
+    std::string getId() const;
+    std::string getType() const;
     int getX() const;
     int getY() const;
     int getHealth() const;
@@ -19,6 +19,11 @@ public:
     void setPosition(int x, int y);
     void setHealth(int health);
     void takeDamage(int damage);
+
+    // Combat methods
+    virtual int getStrength() const = 0;
+    virtual int getAgility() const = 0;
+    virtual int getRange() const = 0;
 
     // State
     bool isAlive() const;
@@ -31,4 +36,4 @@ private:
     int health_;
 };
 
-} // namespace sw::game
+} // namespace sw::game 

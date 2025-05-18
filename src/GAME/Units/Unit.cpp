@@ -1,10 +1,14 @@
-#include "Unit.hpp"
+#include "GAME/Units/Unit.hpp"
 #include <stdexcept>
 
 namespace sw::game {
 
 Unit::Unit(const std::string& id, const std::string& type, int x, int y, int health)
-    : id_(id), type_(type), x_(x), y_(y), health_(health) {
+    : id_(id)
+    , type_(type)
+    , x_(x)
+    , y_(y)
+    , health_(health) {
     if (id.empty()) {
         throw std::invalid_argument("Unit ID cannot be empty");
     }
@@ -16,11 +20,11 @@ Unit::Unit(const std::string& id, const std::string& type, int x, int y, int hea
     }
 }
 
-const std::string& Unit::getId() const {
+std::string Unit::getId() const {
     return id_;
 }
 
-const std::string& Unit::getType() const {
+std::string Unit::getType() const {
     return type_;
 }
 

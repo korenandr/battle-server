@@ -52,7 +52,7 @@ void View::displayAllUnits() const {
     }
 
     std::cout << "Units on the map:\n";
-    for (const auto& unit : units) {
+    for (const auto& [ _, unit ] : units) {
         displayUnit(unit->getId());
     }
 }
@@ -63,7 +63,7 @@ void View::displayMessage(const std::string& message) const {
 
 void View::displayUnitAtPosition(int x, int y) const {
     const auto& units = model_->getAllUnits();
-    for (const auto& unit : units) {
+    for (const auto& [ _, unit ] : units) {
         if (unit->getX() == x && unit->getY() == y) {
             std::cout << unit->getType()[0];  // Display first letter of unit type
             return;

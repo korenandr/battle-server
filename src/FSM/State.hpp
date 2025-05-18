@@ -7,16 +7,6 @@ namespace sw::fsm
     class Game;
 
     class IGameState {
-
-        enum class State {
-            PROCESSING = 0,
-            FINISHED = 1,
-            FAILED = 2,
-        };
-    
-    private:
-        State _state;
-
     public:
         virtual ~IGameState() = default;
 
@@ -25,10 +15,6 @@ namespace sw::fsm
         virtual void exit(Game& game) = 0;
 
         virtual std::string name() const = 0;
-        
-        bool isProcessing() const;
-        bool isFinished() const;
-        bool isFailed() const;
     };
 
     // States

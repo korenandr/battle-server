@@ -2,11 +2,11 @@
 
 #include <GAME/MVC/Model.hpp>
 #include <GAME/MVC/View.hpp>
-#include <IO/Commands/Command.hpp>
+
 #include <IO/Commands/CreateMap.hpp>
 #include <IO/Commands/March.hpp>
-#include <IO/Commands/SpawnSwordsman.hpp>
 #include <IO/Commands/SpawnHunter.hpp>
+#include <IO/Commands/SpawnSwordsman.hpp>
 
 #include <fstream>
 

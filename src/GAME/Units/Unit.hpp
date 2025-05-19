@@ -20,11 +20,6 @@ public:
     void setHealth(int health);
     void takeDamage(int damage);
 
-    // Combat methods
-    virtual int getStrength() const = 0;
-    virtual int getAgility() const = 0;
-    virtual int getRange() const = 0;
-
     // State
     bool isAlive() const;
 

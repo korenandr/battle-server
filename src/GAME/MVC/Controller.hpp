@@ -2,6 +2,7 @@
 
 #include "GAME/MVC/Model.hpp"
 #include "GAME/MVC/View.hpp"
+#include "GAME/Units/UnitFactory.hpp"
 #include "IO/Commands/CreateMap.hpp"
 #include "IO/Commands/SpawnSwordsman.hpp"
 #include "IO/Commands/SpawnHunter.hpp"
@@ -32,6 +33,16 @@ public:
     void handleMarch(const io::March& command);
 
 private:
+    // Helper method to spawn units using the factory
+    void spawnUnit(const std::string& type, 
+                  const std::string& id,
+                  int x, 
+                  int y, 
+                  int health,
+                  int strength = 0,
+                  int agility = 0,
+                  int range = 0);
+
     std::shared_ptr<game::Model> model_;
     std::shared_ptr<game::View> view_;
     std::shared_ptr<EventLog> eventLog_;

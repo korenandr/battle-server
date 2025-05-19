@@ -10,10 +10,15 @@
 
 #include <fstream>
 
+namespace {
+    const int DEFAULT_MAP_WIDTH = 10;
+    const int DEFAULT_MAP_HEIGHT = 10;
+}
+
 namespace sw::game {
 
     Game::Game() {
-        auto model = std::make_shared<game::Model>(10, 10);
+        auto model = std::make_shared<game::Model>(DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT);
         
         // Create view and controller
         auto view = std::make_shared<game::View>(model);

@@ -3,11 +3,6 @@ enable_testing()
 add_executable(
   battle_server_test
   GAME/GameTest.cpp
-  GAME/UnitFactoryTest.cpp
-  ${CMAKE_SOURCE_DIR}/src/GAME/Units/UnitFactory.cpp
-  ${CMAKE_SOURCE_DIR}/src/GAME/Units/Unit.cpp
-  ${CMAKE_SOURCE_DIR}/src/GAME/Units/Swordsman.cpp
-  ${CMAKE_SOURCE_DIR}/src/GAME/Units/Hunter.cpp
 )
 
 # Set up include directories

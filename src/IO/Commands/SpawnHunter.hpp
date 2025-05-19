@@ -2,11 +2,10 @@
 
 #include <cstdint>
 #include <iosfwd>
+#include "IO/Commands/Command.hpp"
 
-namespace sw::io
-{
-	struct SpawnHunter
-	{
+namespace sw::io {
+	struct SpawnHunter : public Command {
 		constexpr static const char* Name = "SPAWN_HUNTER";
 
 		uint32_t unitId{};
@@ -16,6 +15,8 @@ namespace sw::io
 		uint32_t agility{};
 		uint32_t strength{};
 		uint32_t range{};
+
+		void execute(const std::shared_ptr<game::Controller>& controller) override;
 
 		template <typename Visitor>
 		void visit(Visitor& visitor)

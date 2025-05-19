@@ -2,11 +2,11 @@
 
 #include <GAME/MVC/Model.hpp>
 #include <GAME/MVC/View.hpp>
-
+#include <IO/Commands/Command.hpp>
 #include <IO/Commands/CreateMap.hpp>
 #include <IO/Commands/March.hpp>
-#include <IO/Commands/SpawnHunter.hpp>
 #include <IO/Commands/SpawnSwordsman.hpp>
+#include <IO/Commands/SpawnHunter.hpp>
 
 #include <fstream>
 
@@ -27,21 +27,20 @@ namespace sw::game {
 
         // Set up command parser
         parser_.add<io::CreateMap>([this](auto command) { 
-            controller_->handleCreateMap(command); 
-        })
-        .add<io::SpawnSwordsman>([this](auto command) { 
-            controller_->handleSpawnSwordsman(command); 
-        })
-        .add<io::SpawnHunter>([this](auto command) { 
-            controller_->handleSpawnHunter(command); 
+            controller_->handleCommand(command); 
         })
         .add<io::March>([this](auto command) { 
-            controller_->handleMarch(command); 
-        });        
+            controller_->handleCommand(command); 
+        })
+        .add<io::SpawnSwordsman>([this](auto command) { 
+            controller_->handleCommand(command); 
+        })
+        .add<io::SpawnHunter>([this](auto command) { 
+            controller_->handleCommand(command); 
+        });
     }
 
     int Game::run(int argc, char** argv) {
-
         if (argc != 2) {
             throw std::runtime_error("Error: No file specified in command line argument");
         }

@@ -3,6 +3,7 @@
 #include "details/CommandParserVisitor.hpp"
 
 #include <functional>
+#include <memory>
 #include <sstream>
 #include <string>
 
@@ -15,16 +16,16 @@ namespace sw::io
 
 	public:
 		template <class TCommandData>
-		CommandParser& add(std::function<void(TCommandData)> handler)
+		CommandParser& add(std::function<void(const std::shared_ptr<TCommandData>&)> handler)
 		{
 			std::string commandName = TCommandData::Name;
 			auto [it, inserted] = _commands.emplace(
 				commandName,
 				[handler = std::move(handler)](std::istream& stream)
 				{
-					TCommandData data;
+					auto data = std::make_shared<TCommandData>();
 					CommandParserVisitor visitor(stream);
-					data.visit(visitor);
+					data->visit(visitor);
 					handler(std::move(data));
 				});
 			if (!inserted)

@@ -5,9 +5,15 @@ add_executable(
   GAME/GameTest.cpp
   GAME/Units/HunterTest.cpp
   GAME/Units/SwordsmanTest.cpp
+  GAME/MVC/ModelTest.cpp
+  GAME/MVC/ViewTest.cpp
+  GAME/MVC/ControllerTest.cpp
   ${CMAKE_SOURCE_DIR}/src/GAME/Units/Unit.cpp
   ${CMAKE_SOURCE_DIR}/src/GAME/Units/Hunter.cpp
   ${CMAKE_SOURCE_DIR}/src/GAME/Units/Swordsman.cpp
+  ${CMAKE_SOURCE_DIR}/src/GAME/MVC/Model.cpp
+  ${CMAKE_SOURCE_DIR}/src/GAME/MVC/View.cpp
+  ${CMAKE_SOURCE_DIR}/src/GAME/MVC/Controller.cpp
 )
 
 # Set up include directories

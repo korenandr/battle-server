@@ -1,4 +1,4 @@
-#include "GAME/Controller.hpp"
+#include "GAME/MVC/Controller.hpp"
 #include "GAME/Units/Swordsman.hpp"
 #include "GAME/Units/Hunter.hpp"
 

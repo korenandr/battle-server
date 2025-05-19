@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GAME/Model.hpp"
-#include "GAME/View.hpp"
+#include "GAME/MVC/Model.hpp"
+#include "GAME/MVC/View.hpp"
 #include "IO/Commands/CreateMap.hpp"
 #include "IO/Commands/SpawnSwordsman.hpp"
 #include "IO/Commands/SpawnHunter.hpp"

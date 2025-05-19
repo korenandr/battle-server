@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GAME/Controller.hpp>
+#include <GAME/MVC/Controller.hpp>
 #include <IO/System/CommandParser.hpp>
 
 #include <memory>

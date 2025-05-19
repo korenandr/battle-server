@@ -18,12 +18,11 @@ std::shared_ptr<Unit> UnitFactory::createUnit(
     if (type == "Swordsman") {
         return std::make_shared<Swordsman>(id, x, y, health, strength);
     }
-    else if (type == "Hunter") {
+    if (type == "Hunter") {
         return std::make_shared<Hunter>(id, x, y, health, agility, strength, range);
     }
-    else {
-        throw std::invalid_argument("Unknown unit type: " + type);
-    }
+    
+    throw std::invalid_argument("Unknown unit type: " + type);
 }
 
 } // namespace sw::game 

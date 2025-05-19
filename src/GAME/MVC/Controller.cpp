@@ -122,32 +122,6 @@ void Controller::handleMarch(const io::March& command) {
             static_cast<uint32_t>(currentX),
             static_cast<uint32_t>(currentY)
         });
-
-        // Check for combat
-        for (const auto& [otherUnitId, otherUnit] : model_->getAllUnits()) {
-            if (otherUnitId != std::to_string(command.unitId) && 
-                otherUnit->getX() == currentX && 
-                otherUnit->getY() == currentY) {
-                
-                // Combat occurs
-                int damage = unit->getStrength();
-                otherUnit->takeDamage(damage);
-                
-                eventLog_->log(1, io::UnitAttacked{
-                    command.unitId,
-                    static_cast<uint32_t>(std::stoi(otherUnitId)),
-                    static_cast<uint32_t>(damage),
-                    static_cast<uint32_t>(otherUnit->getHealth())
-                });
-
-                if (!otherUnit->isAlive()) {
-                    eventLog_->log(1, io::UnitDied{
-                        static_cast<uint32_t>(std::stoi(otherUnitId))
-                    });
-                    model_->removeUnit(otherUnitId);
-                }
-            }
-        }
     }
 
     // Log march end

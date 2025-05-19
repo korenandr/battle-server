@@ -2,9 +2,7 @@ enable_testing()
 
 add_executable(
   battle_server_test
-  FSM/GameTest.cpp
-  ../src/FSM/Game.cpp
-  ../src/FSM/State.cpp
+  GAME/GameTest.cpp
 )
 
 # Set up include directories

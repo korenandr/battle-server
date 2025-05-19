@@ -7,12 +7,7 @@
 
 Проект разделен на несколько основных компонентов:
 
-### 1. Конечный автомат (FSM)
-- Управляет состояниями симуляции (инициализация, выполнение, завершение)
-- Реализован в [src/FSM/](/src/FSM/)
-- Основные классы: [Game](/src/FSM/Game.hpp), [State](/src/FSM/State.hpp)
-
-### 2. Система ввода-вывода (IO)
+### 1. Система ввода-вывода (IO)
 - Выражена в виде команд и событий
 - Реализована в [src/IO/](/src/IO/)
 - Подкомпоненты:
@@ -20,14 +15,15 @@
   - [Events/](/src/IO/Events/) - Классы событий (UnitMoved, UnitAttacked и т.д.)
   - [System/](/src/IO/System/) - Парсер команд и логгер событий
 
-### 3. Игровая логика
+### 2. Игровая логика
 - Основные игровые сущности и механики
 - Реализована в [src/GAME/](/src/GAME/)
 - Основные классы:
-  - [Model](/src/GAME/Model.hpp) - Модель данных игры
-  - [View](/src/GAME/View.hpp) - Отображение юнитов в консоли
-  - [Controller](/src/GAME/Controller.hpp) - Обработка команд
+  - [Model](/src/GAME/MVC/Model.hpp) - Модель данных игры
+  - [View](/src/GAME/MVC/View.hpp) - Отображение юнитов в консоли
+  - [Controller](/src/GAME/MVC/Controller.hpp) - Обработка команд
   - [Units](/src/GAME/Units/) - Конкретные типы юнитов (Swordsman, Hunter)
+  - [Interfaces](/src/GAME/Units/Interfaces) - Механики юнитов
 
 ## Способы развертывания приложения
 

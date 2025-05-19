@@ -30,10 +30,16 @@ This page walks you through the steps required to deploy the [Battle-Server](htt
     cd build/tests && ctest
     ```
 
+5. Launch the application.
+
+    ```bash
+    cd .. && ./battle_server ../commands_example.txt
+    ```
+
 ## Clean up
 
 1. Clean CMake build files (optional).
 
     ```bash
-    rm -rf build/
+    cd .. && rm -rf ./build
     ```

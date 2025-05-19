@@ -18,7 +18,6 @@ public:
     // Setters
     void setPosition(int x, int y);
     void setHealth(int health);
-    void takeDamage(int damage);
 
     // State
     bool isAlive() const;

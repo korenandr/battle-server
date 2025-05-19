@@ -46,17 +46,10 @@ void Unit::setPosition(int x, int y) {
 }
 
 void Unit::setHealth(int health) {
-    if (health <= 0) {
-        throw std::invalid_argument("Unit health must be positive");
+    if (health < 0) {
+        throw std::invalid_argument("Unit health must be more or equal than zero");
     }
     health_ = health;
-}
-
-void Unit::takeDamage(int damage) {
-    if (damage < 0) {
-        throw std::invalid_argument("Damage cannot be negative");
-    }
-    health_ = std::max(0, health_ - damage);
 }
 
 bool Unit::isAlive() const {

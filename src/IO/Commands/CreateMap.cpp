@@ -17,8 +17,10 @@ void CreateMap::execute(const std::shared_ptr<game::Controller>& controller) {
         height
     });
     
+    /*
     controller->getView()->displayMessage("Map created successfully");
     controller->getView()->displayMap();
+    */
 }
 
 } // namespace sw::io 

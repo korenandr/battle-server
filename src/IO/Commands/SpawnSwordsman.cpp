@@ -31,8 +31,10 @@ void SpawnSwordsman::execute(const std::shared_ptr<game::Controller>& controller
             static_cast<uint32_t>(y)
         });
 
+        /*
         controller->getView()->displayMessage("Swordsman spawned successfully");
         controller->getView()->displayMap();
+        */
     }
     catch (const std::exception& e) {
         controller->getView()->displayMessage(std::string("Failed to spawn Swordsman: ") + e.what());

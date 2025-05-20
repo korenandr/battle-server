@@ -1,8 +1,7 @@
 #pragma once
 
-#include <GAME/MVC/Controller.hpp>
-#include <IO/System/CommandParser.hpp>
-
+#include "GAME/MVC/Controller.hpp"
+#include "IO/System/CommandParser.hpp"
 #include <memory>
 
 namespace sw::game {
@@ -12,6 +11,14 @@ namespace sw::game {
 
             std::shared_ptr<game::Controller> controller_;
             io::CommandParser parser_;
+
+            void setupCommandParser();
+            template<typename T>
+            void addCommandHandler() {
+                parser_.add<T>([this](auto command) {
+                    controller_->handleCommand(command);
+                });
+            }
 
         public:
             Game();

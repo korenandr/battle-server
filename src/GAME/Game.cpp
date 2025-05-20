@@ -17,28 +17,23 @@ namespace {
 
 namespace sw::game {
 
-    Game::Game() {
-        auto model = std::make_shared<game::Model>(DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT);
-        
-        // Create view and controller
-        auto view = std::make_shared<game::View>(model);
-        auto eventLog = std::make_shared<EventLog>();
-        controller_ = std::make_shared<game::Controller>(model, view, eventLog);
+Game::Game() {
+    // Initialize MVC components
+    auto model = std::make_shared<Model>(DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT);
+    auto view = std::make_shared<View>(model);
+    auto eventLog = std::make_shared<EventLog>();
+    controller_ = std::make_shared<Controller>(model, view, eventLog);
+    
+    setupCommandParser();
+}
 
-        // Set up command parser
-        parser_.add<io::CreateMap>([this](auto command) { 
-            controller_->handleCommand(command); 
-        })
-        .add<io::March>([this](auto command) { 
-            controller_->handleCommand(command); 
-        })
-        .add<io::SpawnSwordsman>([this](auto command) { 
-            controller_->handleCommand(command); 
-        })
-        .add<io::SpawnHunter>([this](auto command) { 
-            controller_->handleCommand(command); 
-        });
-    }
+void Game::setupCommandParser() {
+    // Set up command parser using the helper method
+    addCommandHandler<io::CreateMap>();
+    addCommandHandler<io::March>();
+    addCommandHandler<io::SpawnSwordsman>();
+    addCommandHandler<io::SpawnHunter>();
+}
 
     int Game::run(int argc, char** argv) {
         if (argc != 2) {
